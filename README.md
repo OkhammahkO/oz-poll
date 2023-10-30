@@ -22,7 +22,15 @@
 2. YYYY
 3. ZZZ
 
-## Configuration is done in the UI
+## Configuration
+
+```
+sensor:
+  - platform: oz_poll
+    url_website: AskOnHAForum
+    url_api: AskOnHAForum
+
+```
 
 <!---->
 
