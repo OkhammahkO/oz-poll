@@ -16,6 +16,10 @@
 
 ![AllergyCard][AllergyCard]
 
+## Overview
+
+Integrate and visualise oz allergy forecasts in Home Assistant.
+
 ## Installation
 
 1. XXXX
