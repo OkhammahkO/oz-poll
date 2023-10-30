@@ -4,7 +4,9 @@
   "documentation": "https://github.com/OkhammahkO/oz-poll",
   "issue_tracker": "https://github.com/OkhammahkO/oz-poll/issues",
   "dependencies": [],
+  "iot_class": "cloud_polling",
   "config_flow": true,
   "codeowners": ["@OkhammahkO"],
+  "version": "0.1.0",
   "requirements": []
 }
