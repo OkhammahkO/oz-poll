@@ -37,7 +37,7 @@ class OzPollSensor(SensorEntity):
         """Initialize the sensor."""
         self._url_website = url_website  # Assign the website URL to the instance
         self._url_api = url_api  # Assign the API URL to the instance
-        self._attr_name = "Allergy Forecast"
+        self._attr_name = "Oz Poll Allergy Forecast"
         self._attr_native_value = STATE_UNKNOWN
         self._attr_extra_state_attributes = {}
 
