@@ -26,7 +26,7 @@ It's best if you install and manage this custom component via HACS. HACS opens u
 
 HACS is also the best way to install and mananage another requirement for this project - The custom Button Card is the backbone of the Lovelace "card" for this project. 
 
-1. XXXX
+1. Install [HACS](https://hacs.xyz/)
 2. YYYY
 3. ZZZ
 
