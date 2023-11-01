@@ -49,6 +49,10 @@ sensor:
 Q: Does this work for location X?
 A: Maybe. Maybe not. Give it a go.
 
+## Limitations
+I'm not a programmer and this is both my first HA integration and proper GitHub project. So don't expect a pro set-up, implmentation, and maintenance regime;) 
+I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.  
+
 ## Credits
 
 This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
