@@ -43,6 +43,10 @@ sensor:
 
 <!---->
 
+## FAQs
+Q: Does this work for location X?
+A: Maybe. Maybe not. Give it a go.
+
 ## Credits
 
 This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
