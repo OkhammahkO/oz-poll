@@ -24,7 +24,7 @@ It's best if you install and manage this custom component via [HACS](https://hac
 
 HACS is also the best way to install and manage another requirement for this project - The custom [Button card](https://github.com/custom-cards/button-card)  is the backbone of the Lovelace "card" for this project (image above). Button Card is really cool of itself too so this is really nice to have anyway. It's only required for the "card visual", not the actual sensor data.
 
-Some steps require restarts. Follow any prompts as required.
+Follow any prompts and associated documentation as required. Some steps require restarts. If you get stuck anywhere try a restart.
 
 1. Install [HACS](https://hacs.xyz/)
 2. Install [Button card](https://github.com/custom-cards/button-card) (Using HACS installation method is recommended)
