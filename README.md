@@ -22,9 +22,9 @@ Integrate and visualise oz allergy forecasts in Home Assistant.
 
 ## Installation
 
-It's best if you install and manage this custom component via [HACS](https://hacs.xyz/). HACS opens up a whole world of options so it's really worth doing if you haven't already.
+It's best if you install and manage this custom component via [HACS](https://hacs.xyz/). HACS opens up a whole world of options so it's really worth setting up if you haven't already.
 
-HACS is also the best way to install and mananage another requirement for this project - The custom [Button card](https://github.com/custom-cards/button-card)  is the backbone of the Lovelace "card" for this project. Button Card is really cool of itself too so this is really nice to have too anyway. 
+HACS is also the best way to install and mananage another requirement for this project - The custom [Button card](https://github.com/custom-cards/button-card)  is the backbone of the Lovelace "card" for this project. Button Card is really cool of itself too so this is really nice to have too anyway. It's only required for the "card visual", not the actual sensor data.
 
 1. Install [HACS](https://hacs.xyz/)
 2. Install [Button card](https://github.com/custom-cards/button-card) (Using HACS installation method is recommended)
