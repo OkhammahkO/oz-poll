@@ -9,9 +9,7 @@
 
 [![hacs][hacsbadge]][hacs]
 [![Project Maintenance][maintenance-shield]][user_profile]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
-[![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
 ![AllergyCard][AllergyCard]
@@ -26,10 +24,12 @@ It's best if you install and manage this custom component via [HACS](https://hac
 
 HACS is also the best way to install and mananage another requirement for this project - The custom [Button card](https://github.com/custom-cards/button-card)  is the backbone of the Lovelace "card" for this project. Button Card is really cool of itself too so this is really nice to have anyway. It's only required for the "card visual", not the actual sensor data.
 
+Some steps require restarts. Follow any prompts as required.
+
 1. Install [HACS](https://hacs.xyz/)
 2. Install [Button card](https://github.com/custom-cards/button-card) (Using HACS installation method is recommended)
 3. Install this custom component using HACS (current uses custom repository method). HACS > Integrations > Top right three dots > Custom Repositories: Repository = https://github.com/OkhammahkO/oz-poll, Category = Integration
-4. Configure the sensor (below)
+4. Configure the sensor (below).
 
 ## Configuration
 
