@@ -22,6 +22,9 @@ Integrate and visualise oz allergy forecasts in Home Assistant.
 
 ## Installation
 
+It's best if you install and manage this custom component via HACS. HACS opens up a whole world of options so it's really worth doing if you haven't already.
+HACS is also the best way to install and mananage another requirement for this project - The custom Button Card is the backbone of the Lovelace "card" for this project. 
+
 1. XXXX
 2. YYYY
 3. ZZZ
