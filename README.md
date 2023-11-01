@@ -36,6 +36,7 @@ Follow any prompts and associated documentation as required. Some steps require 
 ## Configuration
 
 ```
+#In your configuration.yaml
 sensor:
   - platform: oz_poll
     url_website: AskOnHAForum
