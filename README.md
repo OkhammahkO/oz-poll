@@ -16,7 +16,7 @@
 
 ## Description
 
-Integrate and visualise oz allergy forecasts in Home Assistant.
+Integrate and visualise Oz allergy forecasts in Home Assistant.
 
 ## Installation
 
@@ -47,7 +47,7 @@ sensor:
 <!---->
 
 ## FAQs
-Q: Does this work for location X?
+Q: Does this work for location X in Oz?
 A: Maybe. Maybe not. Give it a go.
 
 ## Limitations
