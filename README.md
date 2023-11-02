@@ -18,8 +18,6 @@
 
 Integrate and visualise Oz allergy forecasts in Home Assistant.
 
-QQQ
-
 ## Installation
 
 It's best if you install and manage this custom component via [HACS](https://hacs.xyz/). HACS opens up a whole world of options so it's really worth setting up if you haven't already.
@@ -32,7 +30,7 @@ Now for actual installation. Follow any prompts and associated documentation as 
 2. Install [Button card](https://github.com/custom-cards/button-card) (Using HACS installation method is recommended)
 3. Install this custom component using HACS (currently uses "custom repository" method). HACS > Integrations > Top right three dots > Custom Repositories: Repository = https://github.com/OkhammahkO/oz-poll, Category = Integration
 4. Then configure the sensor (below). After this stop and check your sensor is working ok (showing up in HA). You'll see most of the data is currently stored in the attributes of the sensor (state contains current allergen level).
-5. Set up the Lovelace card. XXXXXXXXXXX.
+5. Set up the Lovelace card.
 6. Build yourself some automations and alerts!
 
 ## Configuration
