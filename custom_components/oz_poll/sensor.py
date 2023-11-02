@@ -118,9 +118,8 @@ class OzPollSensor(SensorEntity):
     def update(self) -> None:
         try:
             # Website scrape section
-
             # Send an HTTP GET request to the website
-            website_response = requests.get(self._url_website)  # Use self._url_website
+            website_response = requests.get(self._url_website, timeout=10)
             website_soup = BeautifulSoup(website_response.text, "html.parser")
 
             # Select pollen by region table (forecast-card )
@@ -135,33 +134,32 @@ class OzPollSensor(SensorEntity):
             pollen_data_regional_today = []
             asthma_data_regional_today = []
 
-            # Iterate through the selected elements
-            for div_element in div_pollen_elements:
-                # Find and extract the text from the 'forecast-day' and 'forecast-value' elements
-                day_element = div_element.find("div", class_="forecast-day")
-                value_element = div_element.find("div", class_="forecast-value")
+            # Define CSS selectors for both pollen and asthma data
+            selectors = {
+                "pollen": "div.forecast-card .uk-grid-match.uk-child-width-1-2.uk-text-center.ta-forecast-cell.uk-grid",
+                "asthma": "#tae-div div.uk-grid-match.uk-child-width-1-2",
+            }
+            # Iterate through the selected elements for pollen and asthma data
+            for data_type, selector in selectors.items():
+                elements = website_soup.select(selector)
 
-                # Append the extracted text to the list as a dictionary
-                pollen_data_regional_today.append(
-                    {
-                        "region": day_element.text.strip(),
-                        "value": value_element.text.strip(),
-                    }
-                )
+                for div_element in elements:
+                    # Find and extract the text from the 'forecast-day' and 'forecast-value' elements
+                    day_element = div_element.find("div", class_="forecast-day")
+                    value_element = div_element.find("div", class_="forecast-value")
 
-            # Iterate through the selected elements
-            for div_element in div_asthma_elements:
-                # Find and extract the text from the 'forecast-day' and 'forecast-value' elements
-                day_element = div_element.find("div", class_="forecast-day")
-                value_element = div_element.find("div", class_="forecast-value")
+                    data_list = (
+                        pollen_data_regional_today
+                        if data_type == "pollen"
+                        else asthma_data_regional_today
+                    )
 
-                # Append the extracted text to the list as a dictionary
-                asthma_data_regional_today.append(
-                    {
-                        "region": day_element.text.strip(),
-                        "value": value_element.text.strip(),
-                    }
-                )
+                    data_list.append(
+                        {
+                            "region": day_element.text.strip(),
+                            "value": value_element.text.strip(),
+                        }
+                    )
 
             # Rest of the code for retrieving and processing main API data
             url = self._url_api
@@ -241,6 +239,7 @@ class OzPollSensor(SensorEntity):
 
                                 pollen["pollen_level"] = background_value_cleaned
 
+                    # Calculate summary statistics for different pollen levels
                     summary_stats = {
                         "low_pollen_count": sum(
                             1
@@ -263,6 +262,7 @@ class OzPollSensor(SensorEntity):
                             if pollen["pollen_level"] == "Extreme"
                         ),
                     }
+                    # Determine the overall summary level based on the counts
                     if summary_stats["extreme_pollen_count"] > 0:
                         summary_level = "Extreme"
                     elif summary_stats["high_pollen_count"] > 0:
@@ -273,6 +273,7 @@ class OzPollSensor(SensorEntity):
                         summary_level = "Low"
                     summary_stats["summary_level"] = summary_level
 
+                    # Check if Saturday or Sunday and update summary levels accordingly
                     if (
                         saturday_summary_level is None
                         and date_and_weekday["weekday"] == "Sat"
@@ -284,6 +285,7 @@ class OzPollSensor(SensorEntity):
                     ):
                         sunday_summary_level = summary_level
 
+                    # Append data for the current forecast day
                     data_list.append(
                         {
                             "forecast_day": str(forecast_day),
@@ -293,6 +295,7 @@ class OzPollSensor(SensorEntity):
                             "pollen_data": pollen_data,
                         }
                     )
+                    # Set the first forecast summary level if it's the first day
                     if forecast_day == 1:
                         first_forecast_summary_level = summary_level
                     forecast_day += 1
@@ -314,22 +317,31 @@ class OzPollSensor(SensorEntity):
                     if day["summary_stats"]["summary_level"] == "Extreme"
                 )
 
-                forecast_summary_7d = {
-                    "moderate_pollen_count": moderate_pollen_count,
-                    "high_pollen_count": high_pollen_count,
-                    "extreme_pollen_count": extreme_pollen_count,
-                    "summary_level": "Extreme"
+                # Calculate the overall summary level based on the counts
+                overall_summary_level = (
+                    "Extreme"
                     if extreme_pollen_count > 0
                     else "High"
                     if high_pollen_count > 0
                     else "Moderate"
                     if moderate_pollen_count > 0
-                    else "Low",
+                    else "Low"
+                )
+
+                # Create the forecast summary dictionary
+                forecast_summary_7d = {
+                    "moderate_pollen_count": moderate_pollen_count,
+                    "high_pollen_count": high_pollen_count,
+                    "extreme_pollen_count": extreme_pollen_count,
+                    "summary_level": overall_summary_level,
                     "saturday_summary_level": saturday_summary_level,
                     "sunday_summary_level": sunday_summary_level,
                 }
 
-                current_time = datetime.now().strftime("%d-%m-%Y %H:M:S")
+                current_time = datetime.now().strftime(
+                    "%d-%m-%Y %H:%M:%S"
+                )  # Updated time
+
                 data = {
                     "pollen_forecast": {
                         "last_updated": current_time,
@@ -342,7 +354,6 @@ class OzPollSensor(SensorEntity):
                 }
 
                 # Merge the storm_asthma_forecast_today into self._attr_extra_state_attributes
-
                 self._attr_extra_state_attributes = data
                 self._attr_native_value = first_forecast_summary_level
                 self._attr_extra_state_attributes[
