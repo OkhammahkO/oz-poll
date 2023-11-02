@@ -18,7 +18,7 @@
 
 Integrate and visualise Oz allergy forecasts in Home Assistant.
 
-WWW
+QQQ
 
 ## Installation
 
