@@ -62,7 +62,7 @@ Q: Does this work for location X in Oz?
 A: Maybe. Maybe not. Give it a go.
 
 ## Limitations
-I'm not a programmer and this is both my first HA integration and proper GitHub project. So don't expect a pro set-up, implmentation, and maintenance regime;)
+I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implmentation, and maintenance regime;)
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
 ## Credits
