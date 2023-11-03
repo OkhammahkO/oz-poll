@@ -42,6 +42,10 @@ The card uses [Button Card Configuration Templates](https://github.com/custom-ca
 Paste the full code for the template section from XXX  into the very root of your lovelace config.
 
 ```
+#This is the "root" of your lovelace config"
+
+....start of the template code...
+
 button_card_templates:
   mini_pollen_types:
     entity: sensor.oz_poll_allergy_forecast
@@ -52,6 +56,55 @@ button_card_templates:
         - font-weight: bold
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
+
+...end of the template...
+
+...then later in your lovelace config in a view...
+
+title: Home
+views:
+  - title: Pollen
+    path: pollen
+    badges: []
+    cards:
+
+...this is the start of the actual "card"...
+
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                template: pollen_forecast_days
+                variables:
+                  forecast_day: 0
+                state_display: Pollen
+                size: 90%
+                aspect_ratio: 2/1
+
+...the code goes on for a while...
+
+                  label:
+                    - font-weight: bold
+                    - font-size: clamp(14px, 2vw, 20px)
+                    - color: grey
+                  icon:
+                    - color: |
+                        [[[
+                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Low')
+                            return 'lime';
+                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Moderate')
+                            return 'yellow';
+                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'High')
+                            return 'orange';
+                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Extreme')
+                            return 'red';
+                          else
+                            return 'grey';
+                        ]]]
+
+...then the card code ends...
+
 
 ```
 
