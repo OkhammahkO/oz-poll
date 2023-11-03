@@ -27,9 +27,8 @@ Now for actual installation. Follow any prompts and associated documentation as 
 7. Maybe build yourself some automations and alerts! Maybe ask on the forum if you want tips/examples. 
 
 ## Configuration
-
+In your configuration.yaml
 ```
-#In your configuration.yaml
 sensor:
   - platform: oz_poll
     url_website: AskOnHAForum
