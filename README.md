@@ -44,22 +44,22 @@ Paste the full code for the template section from XXX  into the very root of you
 ```
 #This is the "root" of your lovelace config"
 
-....start of the template code...
+....the template code you want to copy starts like this...
 
 button_card_templates:
   mini_pollen_types:
     entity: sensor.oz_poll_allergy_forecast
 
-....rest of the template code...
+....then there's more  code...
 
       label:
         - font-weight: bold
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
 
-...end of the template...
+...then the template code ends ...
 
-...then later in your lovelace config in a view...
+...then say later in your lovelace config in a view...
 
 title: Home
 views:
@@ -68,7 +68,7 @@ views:
     badges: []
     cards:
 
-...this is the start of the actual "card"...
+...you paste the  actual "card", which starts like this...
 
       - type: vertical-stack
         cards:
@@ -82,7 +82,7 @@ views:
                 size: 90%
                 aspect_ratio: 2/1
 
-...the code goes on for a while...
+...goes on for a while...
 
                   label:
                     - font-weight: bold
