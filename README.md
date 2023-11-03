@@ -80,6 +80,7 @@ views:
                   forecast_day: 0
 
 ...code goes on for a while...
+
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'High')
                             return 'orange';
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Extreme')
@@ -88,7 +89,7 @@ views:
                             return 'grey';
                         ]]]
 
-...then the card code eventually ends...
+...then the code eventually ends...
 
 ```
 
