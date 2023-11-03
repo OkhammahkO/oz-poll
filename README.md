@@ -78,23 +78,8 @@ views:
                 template: pollen_forecast_days
                 variables:
                   forecast_day: 0
-                state_display: Pollen
-                size: 90%
-                aspect_ratio: 2/1
 
-...goes on for a while...
-
-                  label:
-                    - font-weight: bold
-                    - font-size: clamp(14px, 2vw, 20px)
-                    - color: grey
-                  icon:
-                    - color: |
-                        [[[
-                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Low')
-                            return 'lime';
-                          if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Moderate')
-                            return 'yellow';
+...code goes on for a while...
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'High')
                             return 'orange';
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'Extreme')
@@ -103,8 +88,7 @@ views:
                             return 'grey';
                         ]]]
 
-...then the card code ends...
-
+...then the card code eventually ends...
 
 ```
 
