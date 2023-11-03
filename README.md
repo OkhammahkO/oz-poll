@@ -22,7 +22,7 @@ Now for actual installation. Follow any prompts and associated documentation as 
 1. Install [HACS](https://hacs.xyz/)
 2. Install [Button card](https://github.com/custom-cards/button-card) (Using HACS installation method is recommended)
 3. Install this custom component using HACS (currently uses "custom repository" method). HACS > Integrations > Top right three dots > Custom Repositories: Repository = https://github.com/OkhammahkO/oz-poll, Category = Integration
-4. Then configure the sensor (below). After this stop and check your sensor is showing up in HA. You'll see most of the data is currently stored in the attributes of the sensor (state contains current allergen level).
+4. Then configure the sensor (below). Restart. After this stop and check your sensor is showing up in HA. You'll (hopefully) see most of the data is currently stored in the attributes of the sensor (state contains current allergen level).
 5. Now you can set up the Lovelace card if you like (See Lovelace Configuration section)
 7. Maybe build yourself some automations and alerts! Maybe ask on the forum if you want tips/examples. 
 
