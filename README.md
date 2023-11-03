@@ -38,7 +38,7 @@ sensor:
 ```
 
 ## Lovelace configuration
-The card uses [Button Card Configuration Templates]([https://hacs.xyz/](https://github.com/custom-cards/button-card#configuration-templates)) reduce code repetition and make maintenance and changes easier.
+The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) reduce code repetition and make maintenance and changes easier.
 The template section goes in the very root of you lovelace config.
 
 ```
