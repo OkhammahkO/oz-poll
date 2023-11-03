@@ -37,6 +37,25 @@ sensor:
 
 ```
 
+## Lovelace configuration
+The card uses 
+
+```
+#The template section goes in the very root of your lovelace config.
+
+button_card_templates:
+  mini_pollen_types:
+    entity: sensor.oz_poll_allergy_forecast
+
+....rest of the template code...
+
+      label:
+        - font-weight: bold
+        - font-size: clamp(8px, 0.7vw, 10px)
+        - color: white
+
+```
+
 <!---->
 
 ## FAQs
