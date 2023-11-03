@@ -38,12 +38,10 @@ sensor:
 ```
 
 ## Lovelace configuration
-The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) reduce code repetition and make maintenance and changes easier.
-The template section goes in the very root of you lovelace config.
+The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) to reduce code repetition and make maintenance and changes easier.
+Paste the full code for the template section from XXX  into the very root of your lovelace config.
 
 ```
-#Paste in the very root of your lovelace config (Excerpt below, use full code)
-
 button_card_templates:
   mini_pollen_types:
     entity: sensor.oz_poll_allergy_forecast
