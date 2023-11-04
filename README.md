@@ -45,8 +45,10 @@ sensor:
 
 ## Lovelace Configuration (Card set-up)
 The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) to reduce code repetition and make maintenance and changes easier.
-1. Paste the code for the template section from XXX into the "root" of your lovelace config. If you use the UI you go to the "Raw configuration editor".
-2. Paste the code for the card into a view where you want it. 
+1. Paste the code for the template section from [lovelace_card.yaml](https://github.com/OkhammahkO/oz-poll/blob/master/lovelace_card.yaml) into the "root" of your lovelace config. If you use the UI you go to the "Raw configuration editor".
+2. Paste the code for the card [lovelace_card.yaml](https://github.com/OkhammahkO/oz-poll/blob/master/lovelace_card.yaml) into a view where you want it.
+
+See below for more hints on this. 
 
 ```
 #This is the "root" of your lovelace config"
