@@ -31,8 +31,10 @@ In your configuration.yaml
 ```
 sensor:
   - platform: oz_poll
-    url_website: AskOnHAForum
-    url_api: AskOnHAForum
+    url_website: AskOnHAForum #Mandatory
+    url_api: AskOnHAForum #Optional. More info available for paid users
+    i_subscribe_and_support: false #Set to true if using url_api above
+    
 
 ```
 
