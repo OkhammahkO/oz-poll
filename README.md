@@ -38,9 +38,9 @@ sensor:
 ```
 | **Name**                    | **Default**              | **Description**                         |
 |-----------------------------|--------------------------|-----------------------------------------|
-| **url_website**             | Required                 | Ask around or guess it.                 |
-| **url_api**                 | Optional                 | More data is available for subscribers. |
-| **i_subscribe_and_support** | Required. Default: false | Change to true if you are a paid user.  |
+| **`url_website`**             | Required                 | Ask around or guess it.                 |
+| **`url_api`**                 | Optional                 | More data is available for subscribers. |
+| **`i_subscribe_and_support`** | Required. Default: `false` | Change to true if you are a paid user.  |
 
 
 ## Lovelace Configuration (Card set-up)
