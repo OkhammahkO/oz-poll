@@ -114,8 +114,7 @@ I'm not a programmer and this is both my first HA integration and proper GitHub 
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
 ## Terms of use
-This code and GitHub project contains no direct references to data sources. You are responsible for informing yourself of any relevant terms of use associated with the sources before activating the integration. 
-In installing the custom component you agree this is your responsibility. 
+This code and GitHub project contains no direct references to data sources. You are responsible for informing yourself of any relevant terms of use before activating the integration by adding the actual sources. 
 The code author proudly supports research into this area via a paid subscription.
 
 ---
