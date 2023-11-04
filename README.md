@@ -113,6 +113,9 @@ A: Maybe. Maybe not. Give it a go.
 I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implmentation, and maintenance regime;)
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
+## Terms of use
+This code contains no direct references to sources. In using this you agree to inform yourself of any relevant terms of use associated with activating the integration.   
+
 ## Credits
 
 This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
