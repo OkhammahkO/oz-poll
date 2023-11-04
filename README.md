@@ -114,17 +114,11 @@ I'm not a programmer and this is both my first HA integration and proper GitHub 
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
 ## Terms of use
-This code contains no direct references to sources. In using this you agree to inform yourself of any relevant terms of use associated with activating the integration.   
-
-## Credits
-
-This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
-
-Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [integration_blueprint][integration_blueprint] template
+This code contains no direct references to sources. In using this you agree to inform yourself of any relevant terms of use associated with activating the integration when you add the source(s).   
 
 ---
 
-[integration_blueprint]: https://github.com/custom-components/integration_blueprint
+
 [black]: https://github.com/psf/black
 [commits-shield]: https://img.shields.io/github/commit-activity/y/OkhammahkO/oz-poll.svg?style=for-the-badge
 [commits]: https://github.com/OkhammahkO/oz-poll/commits/main
