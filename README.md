@@ -53,23 +53,23 @@ See below for more hints on this.
 ```
 #This is the "root" of your lovelace config"
 
-....the template code you want to copy starts like this...
+#....the template code you want to copy starts like this...
 
 button_card_templates:
   pollen_data_regional_today:
     entity: sensor.oz_poll_allergy_forecast
     state_display: |
 
-....then there's more code...
+#....then there's more code...
 
       label:
         - font-weight: bold
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
 
-...then the template code eventually ends ...
+#...then the template code eventually ends ...
 
-...and then say later in your lovelace config in a view of your choice...
+#...and then say later in your lovelace config in a view of your choice...
 
 title: Home
 views:
@@ -78,7 +78,7 @@ views:
     badges: []
     cards:
 
-...you paste the actual "card", which starts like this...
+#...you paste the actual "card", which starts like this...
 
       - type: vertical-stack
         cards:
@@ -89,7 +89,7 @@ views:
                 variables:
                   forecast_day: 0
 
-...code goes on for a while...
+#...code goes on for a while...
 
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'High')
                             return 'orange';
@@ -99,7 +99,7 @@ views:
                             return 'grey';
                         ]]]
 
-...then the code eventually ends...
+#...then the code eventually ends...
 
 ```
 
@@ -110,7 +110,7 @@ Q: Does this work for location X in Oz?
 A: Maybe. Maybe not. Give it a go.
 
 ## Limitations
-I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implmentation, and maintenance regime;)
+I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implementation, and maintenance regime;)
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
 ## Terms of use
