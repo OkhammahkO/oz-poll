@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from homeassistant.helpers import config_validation as cv
 import voluptuous as vol
+import logging
 
 SCAN_INTERVAL = timedelta(minutes=63)
 
@@ -127,6 +128,10 @@ class OzPollSensor(SensorEntity):
                     # Check if the request was successful
                     if response.status_code == 200:
                         forecast_result_node = response.json()["forecast_result"]
+                        disclaimer_node = response.json()["disclaimer"]
+                        grass_gauge_result_node = response.json()["grass_gauge"]
+                        # print(grass_gauge_result_node)
+                        # print(disclaimer_node)
                         forecast_result_bs = BeautifulSoup(
                             forecast_result_node, "html.parser"
                         )
@@ -366,6 +371,7 @@ class OzPollSensor(SensorEntity):
                         data_api = {
                             "allergy_forecast_api": {
                                 "last_updated": current_time,
+                                "grass_gauge": grass_gauge_result_node,
                                 "forecast_location_description": forecast_location_description,
                                 "today_summary_description": today_summary_description,
                                 "forecast_7d_description": forecast_7d_description,
