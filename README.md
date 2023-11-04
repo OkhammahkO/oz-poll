@@ -56,8 +56,9 @@ See below for more hints on this.
 ....the template code you want to copy starts like this...
 
 button_card_templates:
-  mini_pollen_types:
+  pollen_data_regional_today:
     entity: sensor.oz_poll_allergy_forecast
+    state_display: |
 
 ....then there's more code...
 
@@ -66,9 +67,9 @@ button_card_templates:
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
 
-...then the template code ends ...
+...then the template code eventually ends ...
 
-...then say later in your lovelace config in a view of your choice...
+...and then say later in your lovelace config in a view of your choice...
 
 title: Home
 views:
