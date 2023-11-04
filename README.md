@@ -31,12 +31,17 @@ In your configuration.yaml
 ```
 sensor:
   - platform: oz_poll
-    url_website: AskOnHAForum #Mandatory
-    url_api: AskOnHAForum #Optional. More info available for paid users
-    i_subscribe_and_support: false #Set to true if using url_api above
+    url_website: AskOnHAForum
+    url_api: AskOnHAForum
+    i_subscribe_and_support: false
     
-
 ```
+| **Name**                    | **Default**              | **Description**                         |
+|-----------------------------|--------------------------|-----------------------------------------|
+| **url_website**             | Required                 | Ask around or guess it.                 |
+| **url_api**                 | Optional                 | More data is available for subscribers. |
+| **i_subscribe_and_support** | Required. Default: false | Change to true if you are a paid user.  |
+
 
 ## Lovelace Configuration (Card set-up)
 The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) to reduce code repetition and make maintenance and changes easier.
