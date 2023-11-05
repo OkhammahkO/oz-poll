@@ -1,5 +1,6 @@
 #################################
-#This is the start of the template section which goes in the root of you're lovelace config.
+#This is the start of the template section which goes in the root of your lovelace config.
+#You can play with adjusting some setting like card and font size if you like.
 #################################
 button_card_templates:
   pollen_data_regional_today:
