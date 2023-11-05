@@ -39,34 +39,37 @@ sensor:
 | **Name**                    | **Default**              | **Description**                         |
 |-----------------------------|--------------------------|-----------------------------------------|
 | **`url_website`**             | Required                 | Ask around or guess it.                 |
-| **`url_api`**                 | Optional                 | More data is available for subscribers. |
+| **`url_api`**                 | Optional                 | More data is available for subscribers. Ask around about this. Remove this whole entry if not in use (don't leave blank). |
 | **`i_subscribe_and_support`** | Required. Default: `false` | Change to `true` if you are a paid user.  |
 
 
 ## Lovelace Configuration (Card set-up)
 The card uses [Button Card Configuration Templates](https://github.com/custom-cards/button-card#configuration-templates) to reduce code repetition and make maintenance and changes easier.
-1. Paste the code for the template section from XXX into the "root" of your lovelace config. If you use the UI you go to the "Raw configuration editor".
-2. Paste the code for the card into a view where you want it. 
+1. Paste the code for the template section from [lovelace_card.yaml](https://github.com/OkhammahkO/oz-poll/blob/master/lovelace_card.yaml) into the "root" of your lovelace config. If you use the UI you go to the "Raw configuration editor".
+2. Paste the code for the card part from [lovelace_card.yaml](https://github.com/OkhammahkO/oz-poll/blob/master/lovelace_card.yaml) into a view where you want it to appear.
+
+See below for more hints on this. 
 
 ```
 #This is the "root" of your lovelace config"
 
-....the template code you want to copy starts like this...
+#....the template code you want to copy starts like this...
 
 button_card_templates:
-  mini_pollen_types:
+  pollen_data_regional_today:
     entity: sensor.oz_poll_allergy_forecast
+    state_display: |
 
-....then there's more code...
+#....then there's more code...
 
       label:
         - font-weight: bold
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
 
-...then the template code ends ...
+#...then the template code eventually ends ...
 
-...then say later in your lovelace config in a view of your choice...
+#...and then say later in your lovelace config in a view of your choice...
 
 title: Home
 views:
@@ -75,7 +78,7 @@ views:
     badges: []
     cards:
 
-...you paste the actual "card", which starts like this...
+#...you paste the actual "card", which starts like this...
 
       - type: vertical-stack
         cards:
@@ -86,7 +89,7 @@ views:
                 variables:
                   forecast_day: 0
 
-...code goes on for a while...
+#...code goes on for a while...
 
                           if (states['sensor.oz_poll_allergy_forecast'].attributes.pollen_forecast.asthma_data_regional_today[0].value == 'High')
                             return 'orange';
@@ -96,7 +99,7 @@ views:
                             return 'grey';
                         ]]]
 
-...then the code eventually ends...
+#...then the code eventually ends...
 
 ```
 
@@ -107,18 +110,16 @@ Q: Does this work for location X in Oz?
 A: Maybe. Maybe not. Give it a go.
 
 ## Limitations
-I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implmentation, and maintenance regime;)
+I'm not a programmer and this is both my first HA integration and proper GitHub project. I'm just some dude fumbling through some new things. So don't expect a pro set-up, implementation, and maintenance regime;)
 I'll entertain bug and feature requests, but well there will be effort and skill based limits to what I can do.
 
-## Credits
-
-This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
-
-Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [integration_blueprint][integration_blueprint] template
+## Terms of use
+This code and GitHub project contains no direct references to data sources. You are responsible for informing yourself of any relevant terms of use before activating the integration by adding the actual sources. 
+The code author proudly supports research into this area via paying for a subscription and encourages you to do the same.
 
 ---
 
-[integration_blueprint]: https://github.com/custom-components/integration_blueprint
+
 [black]: https://github.com/psf/black
 [commits-shield]: https://img.shields.io/github/commit-activity/y/OkhammahkO/oz-poll.svg?style=for-the-badge
 [commits]: https://github.com/OkhammahkO/oz-poll/commits/main
