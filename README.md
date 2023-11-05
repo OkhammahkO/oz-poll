@@ -39,7 +39,7 @@ sensor:
 | **Name**                    | **Default**              | **Description**                         |
 |-----------------------------|--------------------------|-----------------------------------------|
 | **`url_website`**             | Required                 | Ask around or guess it.                 |
-| **`url_api`**                 | Optional                 | More data is available for subscribers. Ask around about this. |
+| **`url_api`**                 | Optional                 | More data is available for subscribers. Ask around about this. Remove this whole entry if not in use (don't leave blank). |
 | **`i_subscribe_and_support`** | Required. Default: `false` | Change to `true` if you are a paid user.  |
 
 
