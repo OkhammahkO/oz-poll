@@ -1,3 +1,6 @@
+#################################
+#This is the start of the template section which goes in the root of you're lovelace config.
+#################################
 button_card_templates:
   pollen_data_regional_today:
     entity: sensor.oz_poll_allergy_forecast
@@ -215,12 +218,20 @@ button_card_templates:
         - font-weight: bold
         - font-size: clamp(8px, 0.7vw, 10px)
         - color: white
+
+#################################
+#This template section ends here 
+#################################
+
 title: Home
 views:
   - title: Pollen
     path: pollen
     badges: []
     cards:
+      #################################
+      #This is the start of the actual "cards". Put them where you want and adjust as required.
+      #################################
       - type: vertical-stack
         cards:
           - type: markdown
@@ -842,3 +853,6 @@ views:
                **Today:** {{states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.today_summary_description}}
                **7 Day:** {{states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.forecast_7d_description}}
 
+#################################
+#This is the end of the actual "cards".
+#################################
