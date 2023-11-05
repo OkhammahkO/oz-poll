@@ -115,7 +115,7 @@ I'll entertain bug and feature requests, but well there will be effort and skill
 
 ## Terms of use
 This code and GitHub project contains no direct references to data sources. You are responsible for informing yourself of any relevant terms of use before activating the integration by adding the actual sources. 
-The code author proudly supports research into this area via paying for a subscription.
+The code author proudly supports research into this area via paying for a subscription and encourages you to do the same.
 
 ---
 
