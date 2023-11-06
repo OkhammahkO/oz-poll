@@ -32,7 +32,7 @@ In your configuration.yaml
 sensor:
   - platform: oz_poll
     url_website: AskOnHAForum
-    url_api: AskOnHAForum #Optional, remove entrie row if not in use.
+    url_api: AskOnHAForum
     i_subscribe_and_support: false
     
 ```
