@@ -54,69 +54,108 @@ class OzPollSensor(SensorEntity):
     def update(self) -> None:
         self._attr_native_value = STATE_UNKNOWN
         try:
-            # Website scrape section
-            # Send an HTTP GET request to the website
+            # Website section
+            # HTTP GET request
             website_response = requests.get(self._url_website, timeout=10)
             website_soup = BeautifulSoup(website_response.text, "html.parser")
 
-            # Extract Forecast Date, Website Last Updated, and Pollen Forecast Today Melbourne Grass
-            website_value_date = website_soup.select_one("#pdate.pollen-date").get_text(
+            # Initialize empty lists to store the extracted values from the header gauge
+            pollen_data_today_website_gauge = []
+
+            # Extract data from the header "gauge".
+            website_gauge_date = website_soup.select_one("#pdate.pollen-date").get_text(
                 strip=True
             )
-            website_last_updated = website_soup.select_one(
-                "#district-pollen-div .ta-notice"
-            ).get_text(strip=True)
-            website_value_melbourne = website_soup.select_one("#plevel").get_text(
+            website_gauge_site = website_soup.select_one("#psite").get_text(strip=True)
+
+            website_gauge_value = website_soup.select_one("#plevel").get_text(
                 strip=True
             )
 
-            # Initialize empty lists to store the extracted values
-            pollen_data_regional_today = []
-            asthma_data_regional_today = []
-
-            # Define CSS selectors for both pollen and asthma data tables
-            selectors = {
-                "pollen": "div.forecast-card .uk-grid-match.uk-child-width-1-2.uk-text-center.ta-forecast-cell.uk-grid",
-                "asthma": "#tae-div div.uk-grid-match.uk-child-width-1-2",
+            # Create a dictionary to store the value pairs
+            gauge_data = {
+                "gauge_date": website_gauge_date,
+                "gauge_site": website_gauge_site,
+                "gauge_value": website_gauge_value,
             }
-            # Iterate through the selected elements for pollen and asthma data
-            for data_type, selector in selectors.items():
-                elements = website_soup.select(selector)
 
-                for div_element in elements:
-                    # Find and extract the text from the 'forecast-day' and 'forecast-value' elements
-                    day_element = div_element.find("div", class_="forecast-day")
-                    value_element = div_element.find("div", class_="forecast-value")
-
-                    data_list = (
-                        pollen_data_regional_today
-                        if data_type == "pollen"
-                        else asthma_data_regional_today
-                    )
-
-                    data_list.append(
-                        {
-                            "region": day_element.text.strip(),
-                            "value": value_element.text.strip(),
-                        }
-                    )
-
-            # Append Melbourne's pollen data to the list (since that's not in the tables)
-            pollen_data_regional_today.append(
-                {
-                    "region": "Melbourne",  # Set the region to Melbourne
-                    "value": website_value_melbourne,  # Use website_value_melbourne as the value
-                }
-            )
+            # Append the dictionary to the list
+            pollen_data_today_website_gauge.append(gauge_data)
 
             data_web = {
                 "allergy_forecast_web": {
-                    "last_updated_description": website_last_updated,
-                    "date": website_value_date,
-                    "asthma_data_regional_today": asthma_data_regional_today,
-                    "pollen_data_regional_today": pollen_data_regional_today,
+                    "site_gauge_data": gauge_data,
                 }
             }
+
+            if website_gauge_site == "Melbourne":
+                # Extract Melbourne specific data
+                # Initialize empty dictionaries to store the extracted values
+                # Get last updated values.
+                website_last_updated_pollen = website_soup.select_one(
+                    "#district-pollen-div .ta-notice"
+                ).get_text(strip=True)
+                website_notices = website_soup.select("#tae-div .ta-notice")
+                if len(website_notices) >= 2:
+                    website_last_updated_asthma = website_notices[1].get_text(
+                        strip=True
+                    )
+                else:
+                    website_last_updated_asthma = "Updated time not found."
+
+                pollen_data_regional_today = {
+                    "last_updated_message": website_last_updated_pollen,
+                    "regional_data": [],
+                }
+                asthma_data_regional_today = {
+                    "last_updated_message": website_last_updated_asthma,
+                    "regional_data": [],
+                }
+
+                # Define CSS selectors for both pollen and asthma data tables
+                selectors = {
+                    "pollen": "div.forecast-card .uk-grid-match.uk-child-width-1-2.uk-text-center.ta-forecast-cell.uk-grid",
+                    "asthma": "#tae-div div.uk-grid-match.uk-child-width-1-2",
+                }
+
+                # Iterate through the selected elements for pollen and asthma data
+                for data_type, selector in selectors.items():
+                    elements = website_soup.select(selector)
+                    for div_element in elements:
+                        # Find and extract the text from the 'forecast-day' and 'forecast-value' elements
+                        day_element = div_element.find("div", class_="forecast-day")
+                        value_element = div_element.find("div", class_="forecast-value")
+
+                        data_dict = {
+                            "region": day_element.text.strip(),
+                            "value": value_element.text.strip(),
+                        }
+
+                        if data_type == "pollen":
+                            pollen_data_regional_today["regional_data"].append(
+                                data_dict
+                            )
+                        else:
+                            asthma_data_regional_today["regional_data"].append(
+                                data_dict
+                            )
+
+                # Append Gauge pollen data to the list (since that's not in the tables)
+                pollen_data_regional_today["regional_data"].append(
+                    {
+                        "region": website_gauge_site,  # Set the region to Melbourne
+                        "value": website_gauge_value,  # Use website_gauge_value as the value
+                    }
+                )
+
+                # Update the data_web dictionary with Melbourne data
+                data_web["allergy_forecast_web"][
+                    "asthma_data_regional_today"
+                ] = asthma_data_regional_today
+                data_web["allergy_forecast_web"][
+                    "pollen_data_regional_today"
+                ] = pollen_data_regional_today
+
             self._attr_extra_state_attributes = {**data_web}
 
             # Rest of the code for retrieving and processing main API data
@@ -130,8 +169,6 @@ class OzPollSensor(SensorEntity):
                         forecast_result_node = response.json()["forecast_result"]
                         disclaimer_node = response.json()["disclaimer"]
                         grass_gauge_result_node = response.json()["grass_gauge"]
-                        # print(grass_gauge_result_node)
-                        # print(disclaimer_node)
                         forecast_result_bs = BeautifulSoup(
                             forecast_result_node, "html.parser"
                         )
@@ -143,7 +180,6 @@ class OzPollSensor(SensorEntity):
                             "div", text=lambda text: text and "Allergy Forecast" in text
                         )
                         if forecast_location_description_div:
-                            # Do something with the selected div, for example, print its text
                             forecast_location_description = (
                                 forecast_location_description_div.text.strip()
                             )
@@ -333,7 +369,6 @@ class OzPollSensor(SensorEntity):
                         )  # Updated time
 
                         # Create the summary description for today's pollen forecast
-                        # data_list = data_list  # Assuming you already have data_list
                         today_data = data_list[0]
 
                         summary_level = today_data["summary_stats"]["summary_level"]
@@ -391,8 +426,8 @@ class OzPollSensor(SensorEntity):
                 # Sensor value is today's summary level when _i_subscribe_and_support is True.
                 self._attr_native_value = first_forecast_summary_level
             else:
-                # Sensor value is website_value_melbourne when _i_subscribe_and_support is False.
-                self._attr_native_value = website_value_melbourne
+                # Sensor value is website_gauge_value when _i_subscribe_and_support is False.
+                self._attr_native_value = website_gauge_value
 
         except requests.RequestException:
             self._attr_native_value = STATE_UNKNOWN

@@ -8,7 +8,7 @@ button_card_templates:
     state_display: |
       [[[
         const region_index = variables.region_index;
-        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].region);
+        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].region);
       ]]]
     show_label: false
     show_state: true
@@ -26,7 +26,7 @@ button_card_templates:
         - color: |
             [[[
               const region_index = variables.region_index;
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].value == 'Moderate')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].value == 'Moderate')
                 return 'DimGrey';
               return 'white';
             ]]]
@@ -34,13 +34,13 @@ button_card_templates:
         - background-color: |
             [[[
               const region_index = variables.region_index;
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].value == 'Extreme')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].value == 'Extreme')
                 return 'red';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].value == 'High')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].value == 'High')
                 return 'orange';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].value == 'Moderate')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].value == 'Moderate')
                 return 'yellow';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[region_index].value == 'Low')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[region_index].value == 'Low')
                 return 'green';
               return 'grey';
             ]]]
@@ -49,7 +49,7 @@ button_card_templates:
     state_display: |
       [[[
         const region_index = variables.region_index;
-        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].region);
+        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].region);
       ]]]
     show_label: false
     show_state: true
@@ -67,7 +67,7 @@ button_card_templates:
         - color: |
             [[[
               const region_index = variables.region_index;
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].value == 'Moderate')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].value == 'Moderate')
                 return 'DimGrey';
               return 'white';
             ]]]
@@ -75,13 +75,13 @@ button_card_templates:
         - background-color: |
             [[[
               const region_index = variables.region_index;
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].value == 'Extreme')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].value == 'Extreme')
                 return 'red';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].value == 'High')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].value == 'High')
                 return 'orange';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].value == 'Moderate')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].value == 'Moderate')
                 return 'yellow';
-              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[region_index].value == 'Low')
+              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[region_index].value == 'Low')
                 return 'green';
               return 'grey';
             ]]]
@@ -221,7 +221,7 @@ button_card_templates:
         - color: white
 
 #################################
-#The template section ends here 
+#The template section ends here
 #################################
 
 title: Home
@@ -233,10 +233,76 @@ views:
       #################################
       #This is the start of the actual "cards". Put them where you want and adjust as required.
       #################################
+
       - type: vertical-stack
         cards:
           - type: markdown
-            content: ' '
+            content: 'All primary locations on dedicated webpage. '
+            title: Basic Gauge Info
+          - type: custom:button-card
+            entity: sensor.oz_poll_allergy_forecast
+            state_display: |
+              [[[
+                return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value);
+              ]]]
+            label: |
+              [[[
+                return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_site);
+              ]]]
+            name: |
+              [[[
+                return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_date);
+              ]]]
+            icon: |
+              [[[
+                if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Low')
+                  return "mdi:emoticon-happy";
+                if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Moderate')
+                  return "mdi:emoticon-neutral";
+                if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'High')
+                  return "mdi:emoticon-sad";
+                if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Extreme')
+                  return "mdi:emoticon-angry";
+                else
+                  return "mdi:help-circle";
+              ]]]
+            show_label: true
+            show_state: true
+            show_name: true
+            size: 70%
+            aspect_ratio: 3/1
+            layout: icon_state
+            styles:
+              state:
+                - font-weight: bold
+                - font-size: clamp(10px, 2vw, 50px)
+                - color: White
+              icon:
+                - color: |
+                    [[[
+                      if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Low')
+                        return 'green';
+                      if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Moderate')
+                        return 'yellow';
+                      if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'High')
+                        return 'orange';
+                      if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.site_gauge_data.gauge_value == 'Extreme')
+                        return 'red';
+                      else
+                        return 'grey';
+                    ]]]
+              label:
+                - font-weight: bold
+                - font-size: clamp(8px, 1vw, 14px)
+                - color: grey
+              name:
+                - font-weight: bold
+                - font-size: clamp(8px, 1vw,20px)
+                - color: grey
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: VIC Only
             title: Regional Pollen Levels
           - type: vertical-stack
             cards:
@@ -247,11 +313,11 @@ views:
                     name: Regional Pollen
                     state_display: |
                       [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].value);
+                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].value);
                       ]]]
                     label: |
                       [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].region);
+                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].region);
                       ]]]
                     icon: mdi:flower-pollen
                     show_label: true
@@ -276,13 +342,13 @@ views:
                       icon:
                         - color: |
                             [[[
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].value == 'Low')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].value == 'Low')
                                 return 'lime';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].value == 'Moderate')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].value == 'Moderate')
                                 return 'yellow';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].value == 'High')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].value == 'High')
                                 return 'orange';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today[9].value == 'Extreme')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.pollen_data_regional_today.regional_data[9].value == 'Extreme')
                                 return 'red';
                               else
                                 return 'grey';
@@ -340,7 +406,7 @@ views:
       - type: vertical-stack
         cards:
           - type: markdown
-            content: ' '
+            content: ' VIC Only'
             title: Regional Thunderstorm Asthma Risk
           - type: vertical-stack
             cards:
@@ -351,11 +417,11 @@ views:
                     name: Thunderstom Asthma
                     state_display: |
                       [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value);
+                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].value);
                       ]]]
                     label: |
                       [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].region);
+                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].region);
                       ]]]
                     icon: mdi:weather-dust
                     show_label: true
@@ -380,13 +446,13 @@ views:
                       icon:
                         - color: |
                             [[[
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Low')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].value == 'Low')
                                 return 'lime';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Moderate')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].value == 'Moderate')
                                 return 'yellow';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'High')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].value == 'High')
                                 return 'orange';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Extreme')
+                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today.regional_data[0].value == 'Extreme')
                                 return 'red';
                               else
                                 return 'grey';
@@ -436,8 +502,18 @@ views:
       - type: vertical-stack
         cards:
           - type: markdown
-            content: (Paid)
-            title: Detailed Pollen Type Forecast
+            content: >-
+              (**For Subscribers**)
+
+              {{
+
+              (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.forecast_location_description)
+
+              }}
+
+              last_updated:
+              {{(states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.last_updated)}}
+            title: Long Range Forecast With Pollen Type
           - type: horizontal-stack
             cards:
               - type: custom:button-card
@@ -802,58 +878,12 @@ views:
           - type: vertical-stack
             cards:
               - type: horizontal-stack
-                cards:
-                  - type: custom:button-card
-                    entity: sensor.oz_poll_allergy_forecast
-                    name: Storm Asthma
-                    state_display: |
-                      [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value);
-                      ]]]
-                    label: |
-                      [[[
-                        return (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].region);
-                      ]]]
-                    icon: mdi:weather-dust
-                    show_label: false
-                    show_state: true
-                    show_name: true
-                    size: 100%
-                    aspect_ratio: 7/1
-                    styles:
-                      grid:
-                        - margin: none
-                        - grid-template-areas: '"i s n"'
-                        - grid-template-columns: 1fr 1fr 60%
-                      state:
-                        - font-weight: bold
-                        - font-size: clamp(10px, 4vw, 30px)
-                        - color: white
-                      name:
-                        - font-weight: bold
-                        - font-size: clamp(10px, 4vw, 30px)
-                        - color: grey
-                      icon:
-                        - justify-content: end
-                        - width: 70%
-                        - color: |
-                            [[[
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Low')
-                                return 'lime';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Moderate')
-                                return 'yellow';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'High')
-                                return 'orange';
-                              if (states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_web.asthma_data_regional_today[0].value == 'Extreme')
-                                return 'red';
-                              else
-                                return 'grey';
-                            ]]]
+                cards: []
           - type: markdown
             content: |2-
                **Today:** {{states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.today_summary_description}}
                **7 Day:** {{states['sensor.oz_poll_allergy_forecast'].attributes.allergy_forecast_api.forecast_7d_description}}
 
-#################################
-#This is the end of the actual "cards".
-#################################
+      #################################
+      #This is the end of the actual "cards".
+      #################################
