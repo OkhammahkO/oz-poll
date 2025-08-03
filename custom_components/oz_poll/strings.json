@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Oz Poll",
+        "description": "Get Australian pollen forecast data for your Home Assistant.\n\n🌿 **Basic Setup (Free):**\nJust provide the pollen forecast website URL.\nExample: https://www.melbournepollen.com.au/\n\n⭐ **Premium Setup (Paid Subscription):**\nIf you have a premium API subscription, check the box below and provide your API URL.\nExample: https://api.pollenforecast.com.au/app/json/data_acquisition.php?type=1&version=4&site_id=1\n\nPremium features include detailed 7-day forecasts and additional pollen type data.",
+        "data": {
+          "url_website": "🌐 Pollen forecast website URL (required)",
+          "i_subscribe_and_support": "⭐ I have a premium API subscription (enables advanced features)",
+          "url_api": "🔗 Premium API URL (paste your subscription API endpoint here)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the pollen forecast website. Please check the URL and try again.",
+      "invalid_url": "Please enter a valid URL starting with http:// or https://",
+      "url_required": "This URL is required. Please provide a valid pollen forecast URL.",
+      "unknown": "An unexpected error occurred. Please try again."
+    },
+    "abort": {
+      "already_configured": "Oz Poll integration is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Oz Poll Options",
+        "description": "Configure which platforms to enable",
+        "data": {
+          "sensor": "Enable sensor platform"
+        }
+      }
+    }
+  }
+}

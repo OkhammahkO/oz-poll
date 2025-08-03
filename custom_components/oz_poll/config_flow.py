@@ -1,106 +1,132 @@
 """Adds config flow for Oz Poll."""
+from __future__ import annotations
+
+from typing import Any
+
 import voluptuous as vol
+
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers.aiohttp_client import async_create_clientsession
+from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import OzPollApiClient
-from .const import CONF_PASSWORD
-from .const import CONF_USERNAME
-from .const import DOMAIN
-from .const import PLATFORMS
+from .api import OzPollApiClient, OzPollApiError
+from .const import (
+    CONF_URL_WEBSITE,
+    CONF_URL_API, 
+    CONF_I_SUBSCRIBE_AND_SUPPORT,
+    DOMAIN,
+)
 
 
 class OzPollFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for oz_poll."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
+    MINOR_VERSION = 1
 
-    def __init__(self):
-        """Initialize."""
-        self._errors = {}
-
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Handle a flow initialized by the user."""
-        self._errors = {}
-
-        # Uncomment the next 2 lines if only a single instance of the integration is allowed:
-        # if self._async_current_entries():
-        #     return self.async_abort(reason="single_instance_allowed")
+        errors: dict[str, str] = {}
 
         if user_input is not None:
-            valid = await self._test_credentials(
-                user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
-            )
-            if valid:
-                return self.async_create_entry(
-                    title=user_input[CONF_USERNAME], data=user_input
-                )
-            else:
-                self._errors["base"] = "auth"
+            # Validate URLs
+            website_url = user_input.get(CONF_URL_WEBSITE, "").strip()
+            api_url = user_input.get(CONF_URL_API, "").strip()
+            premium_mode = user_input.get(CONF_I_SUBSCRIBE_AND_SUPPORT, False)
+            
+            # Validate website URL
+            if not website_url:
+                errors[CONF_URL_WEBSITE] = "url_required"
+            elif not website_url.startswith(('http://', 'https://')):
+                errors[CONF_URL_WEBSITE] = "invalid_url"
+            
+            # Validate API URL if premium mode is enabled
+            if premium_mode:
+                if not api_url:
+                    errors[CONF_URL_API] = "url_required"
+                elif not api_url.startswith(('http://', 'https://')):
+                    errors[CONF_URL_API] = "invalid_url"
+            
+            # If no validation errors, test connection and create entry
+            if not errors:
+                try:
+                    await self._test_website_connection(website_url)
+                    
+                    data = {
+                        CONF_URL_WEBSITE: website_url,
+                        CONF_I_SUBSCRIBE_AND_SUPPORT: premium_mode,
+                    }
+                    
+                    if premium_mode and api_url:
+                        data[CONF_URL_API] = api_url
+                        title = "Oz Poll (Premium)"
+                    else:
+                        title = "Oz Poll"
+                        
+                    return self.async_create_entry(title=title, data=data)
+                    
+                except OzPollApiError:
+                    errors["base"] = "cannot_connect"
+                except Exception:
+                    errors["base"] = "unknown"
 
-            return await self._show_config_form(user_input)
+        # Build schema with logical field ordering
+        schema_dict = {
+            vol.Required(CONF_URL_WEBSITE): str,
+            vol.Optional(CONF_I_SUBSCRIBE_AND_SUPPORT, default=False): bool,
+        }
+        
+        # Add API URL field if premium mode is selected
+        if user_input and user_input.get(CONF_I_SUBSCRIBE_AND_SUPPORT):
+            schema_dict[vol.Required(CONF_URL_API)] = str
 
-        return await self._show_config_form(user_input)
+        return self.async_show_form(
+            step_id="user",
+            data_schema=vol.Schema(schema_dict),
+            errors=errors,
+        )
+
+    async def _test_website_connection(self, website_url: str) -> None:
+        """Test if we can connect to the website."""
+        session = async_get_clientsession(self.hass)
+        client = OzPollApiClient(website_url=website_url, session=session)
+        
+        # Test connection by attempting to fetch data
+        await client.async_get_data()
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):
+    def async_get_options_flow(config_entry: config_entries.ConfigEntry) -> OzPollOptionsFlowHandler:
+        """Create the options flow."""
         return OzPollOptionsFlowHandler(config_entry)
-
-    async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
-        """Show the configuration form to edit location data."""
-        return self.async_show_form(
-            step_id="user",
-            data_schema=vol.Schema(
-                {vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str}
-            ),
-            errors=self._errors,
-        )
-
-    async def _test_credentials(self, username, password):
-        """Return true if credentials is valid."""
-        try:
-            session = async_create_clientsession(self.hass)
-            client = OzPollApiClient(username, password, session)
-            await client.async_get_data()
-            return True
-        except Exception:  # pylint: disable=broad-except
-            pass
-        return False
 
 
 class OzPollOptionsFlowHandler(config_entries.OptionsFlow):
-    """Config flow options handler for oz_poll."""
+    """Options flow for oz_poll."""
 
-    def __init__(self, config_entry):
+    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Initialize HACS options flow."""
         self.config_entry = config_entry
         self.options = dict(config_entry.options)
 
-    async def async_step_init(self, user_input=None):  # pylint: disable=unused-argument
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Manage the options."""
         return await self.async_step_user()
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Handle a flow initialized by the user."""
         if user_input is not None:
             self.options.update(user_input)
-            return await self._update_options()
+            return self.async_create_entry(data=self.options)
 
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(x, default=self.options.get(x, True)): bool
-                    for x in sorted(PLATFORMS)
+                    vol.Optional(
+                        "sensor", default=self.options.get("sensor", True)
+                    ): bool
                 }
             ),
-        )
-
-    async def _update_options(self):
-        """Update config entry options."""
-        return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_USERNAME), data=self.options
         )
