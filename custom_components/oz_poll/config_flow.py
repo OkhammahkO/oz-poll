@@ -71,15 +71,12 @@ class OzPollFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 except Exception:
                     errors["base"] = "unknown"
 
-        # Build schema with logical field ordering
+        # Always show all fields to avoid form refreshes - build schema with all fields
         schema_dict = {
             vol.Required(CONF_URL_WEBSITE): str,
             vol.Optional(CONF_I_SUBSCRIBE_AND_SUPPORT, default=False): bool,
+            vol.Optional(CONF_URL_API, default=""): str,
         }
-        
-        # Add API URL field if premium mode is selected
-        if user_input and user_input.get(CONF_I_SUBSCRIBE_AND_SUPPORT):
-            schema_dict[vol.Required(CONF_URL_API)] = str
 
         return self.async_show_form(
             step_id="user",
@@ -91,7 +88,7 @@ class OzPollFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Test if we can connect to the website."""
         session = async_get_clientsession(self.hass)
         client = OzPollApiClient(website_url=website_url, session=session)
-        
+
         # Test connection by attempting to fetch data
         await client.async_get_data()
 

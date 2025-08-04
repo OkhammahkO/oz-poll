@@ -3,11 +3,11 @@
     "step": {
       "user": {
         "title": "Set up Oz Poll",
-        "description": "Get Australian pollen forecast data for your Home Assistant.\n\n🌿 **Basic Setup (Free):**\nJust provide the pollen forecast website URL.\nExample: https://www.melbournepollen.com.au/\n\n⭐ **Premium Setup (Paid Subscription):**\nIf you have a premium API subscription, check the box below and provide your API URL.\nExample: https://api.pollenforecast.com.au/app/json/data_acquisition.php?type=1&version=4&site_id=1\n\nPremium features include detailed 7-day forecasts and additional pollen type data.",
+        "description": "Get Australian pollen forecast data for your Home Assistant.\n\n🌿 **Basic Setup (Free):**\nProvide the pollen forecast website URL.\nExample: https://www.melbournepollen.com.au/\n\n⭐ **Premium Setup (Paid Subscription):**\nCheck the premium box and provide both the website URL and your API URL.\nExample API: https://api.pollenforecast.com.au/app/json/data_acquisition.php?type=1&version=4&site_id=1\n\nPremium features include detailed 7-day forecasts and additional pollen type data.",
         "data": {
           "url_website": "🌐 Pollen forecast website URL (required)",
           "i_subscribe_and_support": "⭐ I have a premium API subscription (enables advanced features)",
-          "url_api": "🔗 Premium API URL (paste your subscription API endpoint here)"
+          "url_api": "🔗 Premium API URL (leave empty if using basic mode)"
         }
       }
     },
